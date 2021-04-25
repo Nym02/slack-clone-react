@@ -1,10 +1,13 @@
 import CreateIcom from "@material-ui/icons/Create";
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
+import { enterRoom } from "../../features/counterSlice";
 import { db } from "../../firebase";
 
 const SidebarOption = ({ Icon, title, addChannelOption, id }) => {
+  const dispatch = useDispatch();
   const addChannel = () => {
     const channelName = prompt("Enter Channel Name");
 
@@ -14,7 +17,15 @@ const SidebarOption = ({ Icon, title, addChannelOption, id }) => {
       });
     }
   };
-  const selectChannel = () => {};
+  const selectChannel = () => {
+    if (id) {
+      dispatch(
+        enterRoom({
+          roomId: id,
+        })
+      );
+    }
+  };
   return (
     <div>
       <SidebarOptionContainer
